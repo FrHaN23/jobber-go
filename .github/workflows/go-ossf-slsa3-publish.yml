@@ -1,0 +1,32 @@
+name: Build (Alpine)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # GitHub-hosted runners use Ubuntu
+    container:
+      image: golang:1.21-alpine  # Use Go with Alpine Linux
+
+    steps:
+      - name: Install dependencies
+        run: apk add --no-cache git make
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build the binary
+        run: |
+          go mod tidy
+          CGO_ENABLED=0 go build -o jobber-go -tags netgo -ldflags "-s -w" ./...
+
+      - name: Upload the binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: jobber-go
+          path: ./jobber-go
+          retention-days: 7
