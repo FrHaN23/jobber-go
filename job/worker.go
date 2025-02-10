@@ -49,23 +49,6 @@ func (jq *JobQueue) Enqueue(job Job) {
 	}
 }
 
-// EnqueueAsync executes a job immediately in a separate goroutine
-func (jq *JobQueue) EnqueueAsync(job Job) {
-	jq.mutex.Lock()
-	defer jq.mutex.Unlock()
-
-	if jq.close {
-		log.Print("[Queue] Cannot enqueue async job, queue is closed")
-		return
-	}
-
-	// Run job immediately in a separate goroutine
-	go func() {
-		log.Print("[Async] Executing job in async mode")
-		job.Execute()
-	}()
-}
-
 func (jq *JobQueue) Close() {
 	jq.mutex.Lock()
 	if jq.close {

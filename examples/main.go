@@ -39,11 +39,11 @@ func main() {
 	time.Sleep(2 * time.Second)
 
 	fmt.Println("\n=== Running Asynchronous Job Queue ===")
-	asyncQueue := job.NewJobQueue(5) // Buffer = 5
+	asyncQueue := job.NewAsyncJobQueue(5, 3) // Buffer = 5, workers =3
 
 	// Enqueue some jobs asynchronously
 	for i := 1; i <= 5; i++ {
-		asyncQueue.EnqueueAsync(ExampleJob{name: fmt.Sprintf("Async Job %d", i)})
+		asyncQueue.Enqueue(ExampleJob{name: fmt.Sprintf("Async Job %d", i)})
 	}
 
 	// Close the queue gracefully

@@ -1,6 +1,7 @@
 package job_test
 
 import (
+	"log"
 	"sync"
 	"testing"
 	"time"
@@ -39,21 +40,33 @@ func TestJobQueueSequential(t *testing.T) {
 }
 
 func TestJobQueueAsync(t *testing.T) {
-	jq := job.NewJobQueue(2)
+	jq := job.NewAsyncJobQueue(4, 2)
 	defer jq.Close()
 
 	job1 := &TestJob{id: 1}
 	job2 := &TestJob{id: 2}
 	job3 := &TestJob{id: 3}
+	job4 := &TestJob{id: 4}
+	job5 := &TestJob{id: 5}
+	job6 := &TestJob{id: 6}
 
-	jq.EnqueueAsync(job1)
-	jq.EnqueueAsync(job2)
-	jq.EnqueueAsync(job3) // All should execute concurrently
+	jq.Enqueue(job1)
+	jq.Enqueue(job2)
+	jq.Enqueue(job3)
+	jq.Enqueue(job4)
+	jq.Enqueue(job5)
+	jq.Enqueue(job6) // All should execute concurrently
 
 	time.Sleep(50 * time.Millisecond) // Small delay to allow async jobs to finish
 
-	if !job1.executed || !job2.executed || !job3.executed {
-		t.Error("Expected job1, job2, and job3 to be executed asynchronously")
+	if !job1.executed || !job2.executed || !job3.executed || !job4.executed || !job5.executed || !job6.executed {
+		log.Printf("job 1: %t", job1.executed)
+		log.Printf("job 2: %t", job2.executed)
+		log.Printf("job 3: %t", job3.executed)
+		log.Printf("job 4: %t", job4.executed)
+		log.Printf("job 5: %t", job5.executed)
+		log.Printf("job 6: %t", job6.executed)
+		t.Error("Expected all job to be executed asynchronously")
 	}
 }
 
@@ -85,11 +98,11 @@ func TestJobQueueClosure(t *testing.T) {
 }
 
 func TestEnqueueAsyncAfterClose(t *testing.T) {
-	jq := job.NewJobQueue(2) // Assume this is your async queue
-	jq.Close()               // Close the queue first
+	jq := job.NewAsyncJobQueue(2, 2) // Assume this is your async queue
+	jq.Close()                       // Close the queue first
 
 	job := &TestJob{id: 1}
-	jq.EnqueueAsync(job) // Try to enqueue after closing
+	jq.Enqueue(job) // Try to enqueue after closing
 
 	time.Sleep(50 * time.Millisecond) // Give time for log
 
@@ -105,10 +118,10 @@ func TestCloseTwice(t *testing.T) {
 }
 
 func BenchmarkJobQueue(b *testing.B) {
-	jq := job.NewJobQueue(10)
+	jq := job.NewAsyncJobQueue(10, 2)
 	defer jq.Close()
 
 	for i := 0; i < b.N; i++ {
-		jq.EnqueueAsync(&TestJob{id: i})
+		jq.Enqueue(&TestJob{id: i})
 	}
 }
