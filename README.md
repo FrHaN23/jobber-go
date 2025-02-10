@@ -1,4 +1,5 @@
 # Queue-Go
+[![Go Reference](https://pkg.go.dev/badge/github.com/FrHaN23/jobber-go.svg)](https://pkg.go.dev/github.com/FrHaN23/jobber-go)
 
 A lightweight and efficient job queue system in Go, supporting both **sequential** and **asynchronous** processing using goroutines.
 
@@ -50,11 +51,11 @@ func main() {
 ```go
 func main() {
 	asyncQueue := job.NewJobQueue(5) // Buffer = 5
-	
+
 	for i := 1; i <= 5; i++ {
 		asyncQueue.EnqueueAsync(ExampleJob{name: fmt.Sprintf("Async Job %d", i)})
 	}
-	
+
 	time.Sleep(3 * time.Second)
 	asyncQueue.Close()
 }
@@ -73,4 +74,3 @@ go test -cover ./job
 
 ## 📜 License
 This project is licensed under the MIT License.
-
