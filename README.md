@@ -1,4 +1,4 @@
-# Queue-Go
+# jobber-Go
 [![Go Reference](https://pkg.go.dev/badge/github.com/FrHaN23/jobber-go.svg)](https://pkg.go.dev/github.com/FrHaN23/jobber-go)
 
 A lightweight and efficient job queue system in Go, supporting both **sequential** and **asynchronous** processing using goroutines.
