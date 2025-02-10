@@ -1,0 +1,17 @@
+mode: set
+github.com/frhan23/queue-go/job/worker.go:23.44,34.2 4 1
+github.com/frhan23/queue-go/job/worker.go:36.38,39.14 3 1
+github.com/frhan23/queue-go/job/worker.go:39.14,42.3 2 1
+github.com/frhan23/queue-go/job/worker.go:43.2,43.9 1 1
+github.com/frhan23/queue-go/job/worker.go:44.22,45.42 1 1
+github.com/frhan23/queue-go/job/worker.go:46.10,48.17 2 1
+github.com/frhan23/queue-go/job/worker.go:53.43,57.14 3 1
+github.com/frhan23/queue-go/job/worker.go:57.14,60.3 2 0
+github.com/frhan23/queue-go/job/worker.go:63.2,63.12 1 1
+github.com/frhan23/queue-go/job/worker.go:63.12,66.3 2 1
+github.com/frhan23/queue-go/job/worker.go:69.29,71.14 2 1
+github.com/frhan23/queue-go/job/worker.go:71.14,74.3 2 0
+github.com/frhan23/queue-go/job/worker.go:75.2,80.29 5 1
+github.com/frhan23/queue-go/job/worker.go:83.30,86.27 3 1
+github.com/frhan23/queue-go/job/worker.go:86.27,89.3 2 1
+github.com/frhan23/queue-go/job/worker.go:90.2,90.31 1 1
