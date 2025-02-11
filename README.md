@@ -1,5 +1,6 @@
 # jobber-Go
 [![Go Reference](https://pkg.go.dev/badge/github.com/FrHaN23/jobber-go.svg)](https://pkg.go.dev/github.com/FrHaN23/jobber-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/frhan23/jobber-go)](https://goreportcard.com/report/github.com/frhan23/jobber-go)
 
 A lightweight and efficient job queue system in Go, supporting both **sequential** and **asynchronous** processing using goroutines.
 
@@ -50,13 +51,15 @@ func main() {
 ### 2️⃣ **Asynchronous Job Queue**
 ```go
 func main() {
-	asyncQueue := job.NewJobQueue(5) // Buffer = 5
+	asyncQueue := job.NewAsyncJobQueue(5, 3) // Buffer = 5, workers =3
 
+	// Enqueue some jobs asynchronously
 	for i := 1; i <= 5; i++ {
-		asyncQueue.EnqueueAsync(ExampleJob{name: fmt.Sprintf("Async Job %d", i)})
+		asyncQueue.Enqueue(ExampleJob{name: fmt.Sprintf("Async Job %d", i)})
 	}
-
-	time.Sleep(3 * time.Second)
+	
+	// Close the queue gracefully
+	time.Sleep(3 * time.Second) // Allow some jobs to process
 	asyncQueue.Close()
 }
 ```
